@@ -20,7 +20,12 @@ def create_meal():
       
     date_time = datetime.now()
 
-    new_meal = Meal(name=data["name"], description=data["description"], date_time=date_time,)
+    new_meal = Meal(
+        name=data["name"], 
+        description=data["description"], 
+        date_time=date_time, 
+        diet=data.get("diet")
+    )
 
     db.session.add(new_meal)
     db.session.commit()
@@ -65,6 +70,8 @@ def update_meal(meal_id):
     meal.name = data.get("name", meal.name)
     meal.description = data.get("description", meal.description)
     meal.date_time = datetime.now()
+    if "diet" in data:
+        meal.diet = data["diet"]
 
     db.session.commit()
 
